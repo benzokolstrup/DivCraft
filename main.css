@@ -2,114 +2,23 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Oswald', sans-serif;
 }
-:root{
-    --main-color-black: ;
-}
-
-.color-palette{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-.tile{
-    width:32px;
-    height:32px;
-    display:inline-block;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-
-
-
-
-
-
-
-
-
 body{
 	background: #fee1b8;
+	overflow: hidden;
 }
-nav{
-    position: absolute;
-    top: 100px;
-    left: 100px;
-}
-ul{
-	position: relative;
-	transform: skewY(-15deg);
-}
-ul li{
-	position: relative;
-	list-style: none;
-	width: 150px;
-	padding: 15px;
-	background: #ddd;
-	z-index: calc(1 * var(--i));
-	transition: 0.5s;
-}
-ul li:hover{
-	background: #996FAE;
-	transform: translateX(-50px);
-}
-ul li::before{
-	content: '';
+.tile{
 	position: absolute;
-	top: 0;
-	left: -30px;
-	width: 30px;
-	height: 100%;
-	background: #2e3133;
-	transform-origin: right;
-	transform: skewY(45deg);
-	transition: 0.5s;
+    width: 16px;
+    height: 16px;
 }
-ul li:hover::before{
-	background: #7B5190;
-}
-ul li::after{
-	content: '';
-	position: absolute;
-	top: -30px;
-	left: 0px;
-	width: 100%;
-	height: 30px;
-	background: #35383e;
-	transform-origin: bottom;
-	transform: skewX(45deg);
-	transition: 0.5s;
-}
-ul li:hover::after{
-	background: #86589D;
-}
-ul li a{
-	text-decoration: none;
-	color: #999;
-	display: block;
-	text-transform: uppercase;
-	letter-spacing: 0.05em;
-	transition: 0.5s;
-}
-ul li:hover a{
-	color: #fff;
-}
-ul li:last-child::after{
-	box-shadow: -120px 120px 20px rgba(0,0,0,0.25);
-}
+
+
+
+
+
+
+
+
+
+

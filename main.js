@@ -1,20 +1,19 @@
+const playArea = document.querySelector('#playarea');
 function createTile(tileValue, index, rowIndex){
     if(tileValue == 0) return;
-    let tile = document.createElement('div');
+    var tile = document.createElement('div');
     tile.classList.add('tile');
-    tile.style.left = index*32+'px';
-    tile.style.top = (rowIndex*32)+300+'px';
+    tile.dataset.id = tileValue;
+    tile.style.height = `${initialPlayArea.gridSize}px`;
+    tile.style.width = `${initialPlayArea.gridSize}px`;
+    tile.style.left = `${index * initialPlayArea.gridSize}px`;
+    tile.style.top = `${rowIndex * initialPlayArea.gridSize}px`;
     tile.style.backgroundImage = `url(${tileObjArr.find(obj => obj.tileValue == tileValue).tileImagePath}`;
-    document.querySelector('body').append(tile);
-
+    playArea.append(tile);
 }
 
 map.forEach((mapRow, rowIndex) => {
     mapRow.forEach((tile, index) => {
-        console.log(tile, index, rowIndex)
         createTile(tile, index, rowIndex);
     });
 })
-
-
-
