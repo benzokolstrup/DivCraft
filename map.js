@@ -13,39 +13,34 @@ for(let i = 0; i < columnLenght; i++){
 }
 
 map.forEach((row, rowIndex) => {
-    let random = Math.floor(Math.random() * rowLenght);
+    if(rowIndex < map.length / 2) return;
     row.forEach((tile, i) => {
-        if(i == random){
-            row[i] = 1;
-        }
+        
+
         if(row[i - 1] != 0 && i > 0){
-            let random = Math.floor(Math.random() * tileObjArr.find(obj => obj.tileValue == row[i-1]).adjecentTiles.length)
-            row[i] = tileObjArr.find(obj => obj.tileValue == row[i-1]).adjecentTiles[random]
+            let tileObjBefore = tileObjArr.find(obj => obj.tileValue == row[i-1]);
+            let random = Math.floor(Math.random() * tileObjBefore.adjecentTilesHorizontal.length);
+            row[i] = tileObjArr.find(obj => obj.tileValue == row[i-1]).adjecentTilesHorizontal[random]
         }
         if(rowIndex != 0){
-            console.log(map[rowIndex - 1], "previous")
-            console.log(row, "current")
             if(map[rowIndex - 1][i] != 0){
 
                 // Stupid way of finding adjecent block. Might have to have both a vertical and horizontal neighbouring block property
-                if(map[rowIndex - 1][i] == 6){
-                    row[i] = 5;
-                }
-                if(map[rowIndex - 1][i] == 6){
-                    row[i] = 5;
-                }
-                if(map[rowIndex - 1][i] == 1){
-                    row[i] = 4;
-                }
-                if(map[rowIndex - 1][i] == 2){
-                    row[i] = 3;
-                }
+                
+                let tileObjAbove = tileObjArr.find(obj => obj.tileValue == map[rowIndex - 1][i]);
+                let random = Math.floor(Math.random() * tileObjAbove.adjecentTilesVertical.length);
+                    row[i] = tileObjAbove.adjecentTilesVertical[random];
             }
         }
-        
+        if(rowIndex == map.length / 2){
+            row[0] = 1
+            if(i > 0){
+                row[i] = 5;
+            }
+        }
     });
 });
-
+console.log(map)
 
 
 
