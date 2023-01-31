@@ -1,7 +1,7 @@
 const initialPlayArea = {
     width: window.innerWidth,
     heigt: window.innerHeight,
-    gridSize: 32
+    gridSize: 24
 };
 let map = [];
 let rowLenght = Math.ceil(initialPlayArea.width/initialPlayArea.gridSize);
@@ -26,18 +26,28 @@ map.forEach((row, rowIndex) => {
             if(map[rowIndex - 1][i] != 0){
 
                 // Stupid way of finding adjecent block. Might have to have both a vertical and horizontal neighbouring block property
-                
                 let tileObjAbove = tileObjArr.find(obj => obj.tileValue == map[rowIndex - 1][i]);
+                let tileObjBefore = tileObjArr.find(obj => obj.tileValue == row[i-1]);
                 let random = Math.floor(Math.random() * tileObjAbove.adjecentTilesVertical.length);
+                let testVar = tileObjAbove.adjecentTilesVertical.some(item => tileObjAbove.adjecentTilesHorizontal.includes(item))
+
+                tileObjBefore.adjecentTilesHorizontal.forEach((item) => {
+                    console.log(i, item, tileObjAbove.adjecentTilesVertical.includes(item))
+                });
                     row[i] = tileObjAbove.adjecentTilesVertical[random];
+                
+                
+                console.log("test")
             }
         }
+
         if(rowIndex == map.length / 2){
-            row[0] = 1
+            row[i] = 5
             if(i > 0){
                 row[i] = 5;
             }
         }
+
     });
 });
 console.log(map)
