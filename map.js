@@ -1,7 +1,7 @@
 const initialPlayArea = {
     width: window.innerWidth,
     heigt: window.innerHeight,
-    gridSize: 24
+    gridSize: 16
 };
 let map = [];
 let rowLenght = Math.ceil(initialPlayArea.width/initialPlayArea.gridSize);
@@ -13,42 +13,57 @@ for(let i = 0; i < columnLenght; i++){
 }
 
 map.forEach((row, rowIndex) => {
-    if(rowIndex < map.length / 2) return;
-    row.forEach((tile, i) => {
+    if(rowIndex == Math.ceil(map.length / 2)){
         
-
-        if(row[i - 1] != 0 && i > 0){
-            let tileObjBefore = tileObjArr.find(obj => obj.tileValue == row[i-1]);
-            let random = Math.floor(Math.random() * tileObjBefore.adjecentTilesHorizontal.length);
-            row[i] = tileObjArr.find(obj => obj.tileValue == row[i-1]).adjecentTilesHorizontal[random]
-        }
-        if(rowIndex != 0){
-            if(map[rowIndex - 1][i] != 0){
-
-                // Stupid way of finding adjecent block. Might have to have both a vertical and horizontal neighbouring block property
-                let tileObjAbove = tileObjArr.find(obj => obj.tileValue == map[rowIndex - 1][i]);
-                let tileObjBefore = tileObjArr.find(obj => obj.tileValue == row[i-1]);
-                let random = Math.floor(Math.random() * tileObjAbove.adjecentTilesVertical.length);
-                let testVar = tileObjAbove.adjecentTilesVertical.some(item => tileObjAbove.adjecentTilesHorizontal.includes(item))
-
-                tileObjBefore.adjecentTilesHorizontal.forEach((item) => {
-                    console.log(i, item, tileObjAbove.adjecentTilesVertical.includes(item))
-                });
-                    row[i] = tileObjAbove.adjecentTilesVertical[random];
-                
-                
-                console.log("test")
+        for(let i = 0; i < row.length; i++){
+            if(i == 0){
+                row[0] = 5;
             }
-        }
-
-        if(rowIndex == map.length / 2){
-            row[i] = 5
             if(i > 0){
                 row[i] = 5;
+                /*let tileObjAbove = tileObjArr.find(obj => obj.tileValue == map[rowIndex - 1][i]);
+                let tileObjBefore = tileObjArr.find(obj => obj.tileValue == row[i - 1]);
+                let first_array = tileObjAbove.adjecentTilesVertical;
+                let second_array = tileObjBefore.adjecentTilesHorizontal;
+                let new_array = first_array.filter((element) => second_array.includes(element));
+                let random = Math.floor(Math.random() * new_array.length);
+                if(tileObjBefore.tileValue == 2){
+                    random = Math.floor(Math.random() * 1)
+                }
+                row[i] = new_array[random];*/
             }
         }
+        console.log("test", row)
+    }
+    if(rowIndex > Math.ceil(map.length / 2)){
+        for(var i = 0; i < row.length; i++){
+            if(i == 0){
+                let tileObjAbove = tileObjArr.find(obj => obj.tileValue == map[rowIndex - 1][i]);
+                
+                let random = Math.floor(Math.random() * tileObjAbove.adjecentTilesVertical.length);
 
-    });
+                row[i] = tileObjAbove.adjecentTilesVertical[random];
+            }
+            if(i > 0){         
+                let tileObjAbove = tileObjArr.find(obj => obj.tileValue == map[rowIndex - 1][i]);
+                let tileObjBefore = tileObjArr.find(obj => obj.tileValue == row[i - 1]);
+                let first_array = tileObjAbove.adjecentTilesVertical;
+                let second_array = tileObjBefore.adjecentTilesHorizontal;
+                let new_array = first_array.filter((element) => second_array.includes(element));
+                if(new_array.length){
+                    let random = Math.floor(Math.random() * new_array.length);
+                    if(tileObjBefore.tileValue == 2){
+                        random = Math.floor(Math.random() * 1)
+                    }
+                    row[i] = new_array[random];
+                }
+                if(!new_array.length){
+                    console.log(i, tileObjAbove, row[i - 1])
+
+                }
+            }
+        }
+    }
 });
 console.log(map)
 
@@ -77,3 +92,44 @@ console.log(map)
     }
     map.push(row)
 }*/
+
+
+
+
+
+
+
+
+/*if(rowIndex != 0){
+            if(map[rowIndex - 1][i] != 0){
+                let tileObjAbove = tileObjArr.find(obj => obj.tileValue == map[rowIndex - 1][i]);
+                let tileObjBefore = tileObjArr.find(obj => obj.tileValue == row[i-1]);
+                let random = Math.floor(Math.random() * tileObjAbove.adjecentTilesVertical.length);
+                let testVar = tileObjAbove.adjecentTilesVertical.some(item => tileObjAbove.adjecentTilesHorizontal.includes(item))
+
+                tileObjBefore.adjecentTilesHorizontal.forEach((item) => {
+                    console.log(i, item, tileObjAbove.adjecentTilesVertical.includes(item))
+                });
+                    row[i] = tileObjAbove.adjecentTilesVertical[random];
+                
+                
+                console.log("test")
+            }
+        }
+
+        if(rowIndex == map.length / 2){
+            row[i] = 5
+            if(i > 0){
+                row[i] = 5;
+            }
+        }*/
+
+        /*    if(rowIndex > map.length / 2){
+        row.forEach((tile, i) => {
+            if(row[i - 1] != 0 && i > 0){
+                let tileObjBefore = tileObjArr.find(obj => obj.tileValue == row[i-1]);
+                let random = Math.floor(Math.random() * tileObjBefore.adjecentTilesHorizontal.length);
+                row[i] = tileObjArr.find(obj => obj.tileValue == row[i-1]).adjecentTilesHorizontal[random]
+            }
+        });
+    } */

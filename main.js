@@ -1,6 +1,7 @@
 const playArea = document.querySelector('#playarea');
 function createTile(tileValue, index, rowIndex){
-    if(tileValue == 0) return;
+    
+    if(tileValue == 0 || tileValue == undefined) return;
     var tile = document.createElement('div');
     tile.classList.add('tile');
     tile.dataset.id = tileValue;
