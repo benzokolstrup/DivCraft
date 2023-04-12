@@ -1,0 +1,98 @@
+:root{
+	--hotbar-border-clr: rgb(174, 174, 174);
+}
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body{
+	background: #badbe4;
+	overflow: hidden;
+}
+.tile{
+	position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.tile.active{
+	outline: 1.5px solid red;
+    outline-offset: -1.5px;
+}
+.tile.mouse-over:hover{
+	outline: 1.5px solid black;
+    outline-offset: -1.5px;
+}
+.shade-overlay{
+	position: absolute;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.85) 100%);
+	inset: 0;
+    opacity: 1;
+	pointer-events: none;
+	z-index: 10;
+}
+#hotbar{
+	position: absolute;
+	transform: translate(-50%);
+	left: 50%;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 20;
+	flex-direction: column;
+}
+#hotbar .hotkey-container{
+	display: flex;
+}
+#hotbar .hotkey-container .hotkey{
+	width: 64px;
+	height: 64px;
+	position: relative;
+	border: 5px solid var(--hotbar-border-clr);
+	margin-right: 1px;
+    box-shadow: inset -1px -1px 0px 0px #f8f8f8, inset 2px 2px 7px #000000a8, 1px 0px 0px #000000a8, 0px -1px 0px 0px #f8f8f8;
+	background-color: rgba(228, 218, 172, 0.292);
+}
+#hotbar .hotkey-container .hotkey:last-child{
+	border-right: 5px solid rgb(215, 215, 215);
+}
+#hotbar .hotkey-container .hotkey:hover{
+	background: rgba(228, 218, 172, 0.45);
+}
+#hotbar .hotkey-container .hotkey[data-stack-size]::after{
+	content: attr(data-stack-size);
+	position: absolute;
+	bottom: 2px;
+	right: 5px;
+	font-family: 'VT323', monospace;
+	color: white;
+    font-size: 24px;
+}
+#hotbar .hotkey-container .hotkey[data-hotkey]::before{
+	content: attr(data-hotkey);
+	position: absolute;
+	top: 1px;
+	left: 4px;
+	font-family: 'VT323', monospace;
+	color: white;
+    font-size: 16px;
+}
+#hotbar .hotkey-container .hotkey.active{
+	border-color: rgb(215, 215, 215);
+	background: rgba(228, 218, 172, 0.45);
+}
+#player{
+	height: 100px;
+	width: 50px;
+	background-color: chocolate;
+	border-radius: 100px;
+	position: absolute;
+	top: 200px;
+	left: 500px;
+}
+#player .hitbox{
+	width: 100%;
+	height: 100%;
+	border: 1px solid red;
+}

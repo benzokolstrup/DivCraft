@@ -6,14 +6,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BenjaminKolstrup</title>
     <!--Stylesheets-->
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <!--Scripts-->
-    <script src="tileObj.js"></script>
-    <script src="map.js"></script>
-    <script src="main.js" defer></script>
+    <script src="js/tileObj.js" defer></script>
+    <script src="js/map.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/createMap.js" defer></script>
+
+    <script src="js/collide.js"></script>
+
+
+    <script src="js/hotkeys.js" defer></script>
     <!--Dependencies-->
 </head>
 <body>
     <div id="playarea"></div>
+        <div id="player">
+            <div class="hitbox"></div>
+        </div>
+        <div id="hotbar">
+            <div class="hotkey-container">
+                <div class="hotkey" data-hotkey="Q"></div>
+                <div class="hotkey" data-hotkey="W"></div>
+                <div class="hotkey" data-hotkey="E"></div>
+                <div class="hotkey" data-hotkey="R"></div>
+            </div>
+            <div class="hotkey-container">
+                <div class="hotkey active" data-hotkey="1" data-stack-size="5"></div>
+                <div class="hotkey" data-hotkey="2" data-stack-size="24"></div>
+                <div class="hotkey" data-hotkey="3" data-stack-size=""></div>
+                <div class="hotkey" data-hotkey="4"></div>
+                <div class="hotkey" data-hotkey="5"></div>
+                <div class="hotkey" data-hotkey="6"></div>
+                <div class="hotkey" data-hotkey="7" data-stack-size="106"></div>
+                <div class="hotkey" data-hotkey="8"></div>
+                <div class="hotkey" data-hotkey="9"></div>
+            </div>      
+        </div>
+        
+        <div id="healthbar"></div>
+
 </body>
 </html>
