@@ -24,9 +24,9 @@ let colidingLeftBlocks = [];
 let colidingRightBlocks = [];
 let blockOverlapThreshold = 40;
 
-let speed = 5;
+let speed = 3.5;
 let intervalSpeed = 10;
-let jumpHeight = 160;
+let jumpHeight = 100;
 let jumps = 1;
 let range = 250;
 
@@ -144,8 +144,17 @@ function stopKeyboardAction(e){
             clearInterval(moveLeftInterval);
         break;
         case 32:
-            clearInterval(jumpInterval);
+            for(let i = 0; i < 100; i++){
+                clearInterval(jumpInterval);
+            }
+            if(isJumping && !isFalling){
+                for(let i = 0; i < 100; i++){
+                    clearInterval(jumping);
+                }
+                fall();
+            }
         break;
+
     }
 }
 
@@ -158,28 +167,34 @@ function updatePlayerPos(){
 function jump(){
     if(!isJumping){
         isJumping = true;
-        let jumpingSpeed = speed * 1.5;
+        let jumpingSpeed = speed * 1.3;
         let startingTopPos = playerEl.offsetTop;
         jumping = setInterval( () => {
+            checkGround();
             jumpingSpeed *= 0.99;
             playerEl.style.top = `${playerEl.offsetTop - jumpingSpeed}px`;
-            if(playerEl.offsetTop <= startingTopPos - jumpHeight){
-                clearInterval(jumping);
-                fall();
-            }
             playerBottom = playerEl.offsetTop + playerEl.offsetHeight;
             playerTop = playerEl.offsetTop;
             playerCenterY = playerEl.offsetTop + (playerEl.offsetHeight / 2);
-            checkGround();
+
+            if(colidingTopBlocks.length > 0 && playerTop <= colidingTopBlocks[0].getAttribute('data-bottom-pos')){
+                playerEl.style.top = `${colidingTopBlocks[0].getAttribute('data-bottom-pos')}px`;
+                clearInterval(jumping);
+                fall();
+            }else if(playerEl.offsetTop <= startingTopPos - jumpHeight){
+                clearInterval(jumping);
+                fall();
+            }
+
+            
         }, intervalSpeed);
     }
 }
 
 function fall(){
     isFalling = true;
-    let fallingSpeed = speed;
+    let fallingSpeed = speed * 1.3;
     falling = setInterval( () => {
-        checkGround();
         fallingSpeed *= 1.01;
         playerEl.style.top = `${playerEl.offsetTop + fallingSpeed}px`;
         playerBottom = playerEl.offsetTop + playerEl.offsetHeight;
@@ -195,7 +210,7 @@ function fall(){
             playerTop = playerEl.offsetTop;
             playerCenterY = playerEl.offsetTop + (playerEl.offsetHeight / 2);
         }
-
+        checkGround();
     }, intervalSpeed);
     checkGround();
 }
@@ -205,12 +220,19 @@ function checkGround(){
     colidingGroundBlocks = [];
     colidingRightBlocks = [];
     colidingLeftBlocks = [];
+    colidingTopBlocks = [];
     allBlocks.forEach((block) => {
         block.classList.remove('active');
         // Check for blocks under the player
         if(block.getAttribute('data-top-pos') >= playerBottom && block.getAttribute('data-top-pos') < playerBottom + blockOverlapThreshold){
             if(block.getAttribute('data-left-pos') <= playerLeft && block.getAttribute('data-right-pos') > playerLeft || block.getAttribute('data-right-pos') >= playerRight && block.getAttribute('data-left-pos') < playerRight){
                 colidingGroundBlocks.push(block);
+            }
+        }
+        // Check for blocks on the top of the player
+        if(block.getAttribute('data-bottom-pos') <= playerTop && block.getAttribute('data-bottom-pos') > playerTop - blockOverlapThreshold){
+            if(block.getAttribute('data-left-pos') <= playerLeft && block.getAttribute('data-right-pos') > playerLeft || block.getAttribute('data-right-pos') >= playerRight && block.getAttribute('data-left-pos') < playerRight){
+                colidingTopBlocks.push(block);
             }
         }
         // Check for blocks on the right of the player
@@ -232,6 +254,16 @@ function checkGround(){
             return aTopPos - bTopPos;
         });
     }
+    if(colidingTopBlocks.length > 0){
+        colidingTopBlocks.forEach((block) => {
+            block.classList.add('active');
+        })
+        colidingTopBlocks.sort((a, b) => {
+            const aTopPos= parseInt(a.getAttribute('data-top-pos'));
+            const bTopPos = parseInt(b.getAttribute('data-top-pos'));
+            return aTopPos - bTopPos;
+        });
+    }
     if(colidingRightBlocks.length > 0){
         colidingRightBlocks.forEach((block) => {
             block.classList.add('active');
@@ -241,7 +273,6 @@ function checkGround(){
             const bLeftPos = parseInt(b.getAttribute('data-Left-pos'));
             return aLeftPos - bLeftPos;
         });
-        console.log(colidingRightBlocks)
     }
     if(colidingLeftBlocks.length > 0){
         colidingLeftBlocks.forEach((block) => {
@@ -252,7 +283,7 @@ function checkGround(){
             const bRightPos = parseInt(b.getAttribute('data-Right-pos'));
             return aRightPos - bRightPos;
         });
-        console.log(colidingLeftBlocks)
+        
     }
     if(!isJumping && !isFalling && colidingGroundBlocks.length == 0){
         fall();

@@ -10,6 +10,11 @@ body{
 	background: #badbe4;
 	overflow: hidden;
 }
+.action-button{
+	position: relative;
+	z-index: 100000;
+	pointer-events: all;
+}
 .tile{
 	position: absolute;
     background-size: contain;
