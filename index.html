@@ -17,17 +17,21 @@
     <script src="js/main.js" defer></script>
     <script src="js/createMap.js" defer></script>
 
-    <script src="js/collide.js"></script>
-
+    <script src="js/collide.js" defer></script>
 
     <script src="js/hotkeys.js" defer></script>
+
+
+    <script src="js/monster.js" defer></script>
     <!--Dependencies-->
 </head>
 <body>
-    <button class="action-button">Spawn_Monster</button>
-    <div id="playarea"></div>
-        <div id="player">
-            <div class="hitbox"></div>
+    <div id="app">
+        <div class="action-button" data-btn-spawn-monster>spawnMonster</div>
+        <div id="playarea"></div>
+        <div id="shader"></div>
+        <div id="player"></div>
+        <div id="specs">
         </div>
         <div id="hotbar">
             <div class="hotkey-container">
@@ -42,6 +46,6 @@
                 <div class="hotkey" data-hotkey="9"></div>
             </div>      
         </div>
-        <div id="healthbar"></div>
+    </div>
 </body>
 </html>

@@ -30,14 +30,15 @@ let jumpHeight = 100;
 let jumps = 1;
 let range = 250;
 
-let player = {
-    name: 'CosmicDwarf',
-    race: 'Human',
-    class: 'Warrior',
-}
+let playAranaPos = 0;
+
+
 
 let playerCenterX = playerEl.offsetLeft + (playerEl.offsetWidth / 2);
 let playerCenterY = playerEl.offsetTop + (playerEl.offsetHeight / 2);
+
+let playerMapCenterPosX = playerEl.offsetLeft + (playerEl.offsetWidth / 2);
+let playerMapCenterPosY = playerEl.offsetTop + (playerEl.offsetHeight / 2);
 
 let playerBottom = playerEl.offsetTop + playerEl.offsetHeight;
 let playerTop = playerEl.offsetTop;
@@ -50,7 +51,8 @@ function startKeyboardAction(e){
             if(!isMovingRight){
                 isMovingRight = true;
                 moveRightInterval = setInterval( () => {
-                    playerEl.style.left = `${playerEl.offsetLeft + speed}px`;
+                   // playerEl.style.left = `${playerEl.offsetLeft + speed}px`;
+                    playArea.style.transform = `translate(${playAranaPos -= speed}px)`
                     if(colidingRightBlocks.length > 0 && playerRight >= colidingRightBlocks[0].getAttribute('data-left-pos')){
                         playerEl.style.left = `${colidingRightBlocks[0].getAttribute('data-left-pos') - playerEl.offsetWidth}px`;
                     }
@@ -63,7 +65,8 @@ function startKeyboardAction(e){
             if(!isMovingLeft){
                 isMovingLeft = true;
                 moveLeftInterval = setInterval( () => {
-                    playerEl.style.left = `${playerEl.offsetLeft - speed}px`;
+                    //playerEl.style.left = `${playerEl.offsetLeft - speed}px`;
+                    playArea.style.transform = `translate(${playAranaPos += speed}px)`
                     if(colidingLeftBlocks.length > 0 && playerLeft <= colidingLeftBlocks[0].getAttribute('data-right-pos')){
                         playerEl.style.left = `${colidingLeftBlocks[0].getAttribute('data-right-pos')}px`;
                     }
@@ -159,9 +162,17 @@ function stopKeyboardAction(e){
 }
 
 function updatePlayerPos(){
+    function getTranslateX() {
+        var style = window.getComputedStyle(playArea);
+        var matrix = new WebKitCSSMatrix(style.transform);
+        console.log(matrix.m41);
+        return matrix.m41;
+    }
+    playerMapCenterPosX = playerEl.offsetLeft + (playerEl.offsetWidth / 2) - getTranslateX();
     playerCenterX = playerEl.offsetLeft + (playerEl.offsetWidth / 2);
-    playerLeft = playerEl.offsetLeft;
-    playerRight = playerEl.offsetLeft + playerEl.offsetWidth;
+    playerLeft = playerEl.offsetLeft - getTranslateX();
+    playerRight = playerLeft + playerEl.offsetWidth;
+    console.log('X: ' + playerMapCenterPosX)
 }
 
 function jump(){
@@ -186,7 +197,6 @@ function jump(){
                 fall();
             }
 
-            
         }, intervalSpeed);
     }
 }
