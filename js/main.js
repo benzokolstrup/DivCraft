@@ -1,10 +1,8 @@
-const playArea = document.querySelector('#playarea');
-
 let player = {}
-
 function createPlayerObj(){
     player.general = {
-        name: 'Throrain',
+        id: 'player',
+        name: 'Noobie',
         level: 1,
         experience: 0
     },
@@ -22,28 +20,17 @@ function createPlayerObj(){
         isFalling: false
     }
     player.position = {
-        top: '',
-        bottom: '',
-        left: '',
-        right: ''
+        x: 0,
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
     }
     player.colidingBlocks = {
         top: [],
         bottom: [],
         left: [],
         right: []
-    }
-    player.hotbar = {
-
-    }
-    player.equipped = {
-        helmet: '',
-        chest: '',
-        legs: '',
-        feet: ''
-    }
-    player.inventory = {
-
     }
 }
 
@@ -69,8 +56,7 @@ function createSpecList(obj){
             createSpecListItem(key, '', false);
             const properties = Object.getOwnPropertyNames(obj[key]);
             Object.keys(obj[key]).forEach((nestedKey, index) => {
-                console.log(obj[key][nestedKey])
-                if(obj[key][nestedKey] != [] || obj[key][nestedKey] != '' || typeof(obj[key][nestedKey]) == 'boolean'){
+                if(obj[key][nestedKey] != [] || obj[key][nestedKey] != '' || typeof(obj[key][nestedKey]) == 'boolean' || typeof(obj[key][nestedKey]) == 'string' || typeof(obj[key][nestedKey]) == 'number'){
                     createSpecListItem(properties[index], obj[key][nestedKey], true);
                 }
             });
@@ -82,13 +68,15 @@ function createSpecList(obj){
         specItem.classList.add('spec-item');
         if(property != '' || property != undefined){
             let specItemProperty = document.createElement('div');
+            specItemProperty.classList.add('spec-item-property');
+            specItemProperty.dataset.property = property;
             specItemProperty.textContent = `${property}:`;
             specItem.append(specItemProperty);
         }
-        if(value != '' || value != undefined){
+        if(value || value != '' || value != undefined){
             let specItemValue = document.createElement('div');
+            specItemValue.classList.add('spec-item-value');
             specItemValue.textContent += `${value}`;
-            
             specItem.append(specItemValue);
         }
         if(child){
@@ -98,5 +86,15 @@ function createSpecList(obj){
     }
 }
 
+function updateSpecs(...specs){
+    specs.forEach((spec) => {
+        const propertyValue = spec.split('.').reduce((obj, key) => obj[key], player);
+        let specItemValue = document.querySelector(`[data-property='${spec.split('.').pop()}']`).closest('.spec-item').querySelector('.spec-item-value');
+        specItemValue.textContent = propertyValue;        
+    });
+}
+
 createPlayerObj();
 createSpecList(player);
+const playArea = document.querySelector('#playarea');
+let zeroTranslateValue = 12;

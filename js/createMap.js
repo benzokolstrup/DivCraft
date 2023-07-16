@@ -34,8 +34,4 @@ function createTile(tileValue, index, rowIndex){
         playArea.append(tile);
     }
 }
-map.forEach((mapRow, rowIndex) => {
-    mapRow.forEach((tile, index) => {
-        createTile(tile, index, rowIndex);
-    });
-})  
+renderMap()

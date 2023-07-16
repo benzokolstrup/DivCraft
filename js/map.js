@@ -13,73 +13,47 @@ function initializeBlankMap(){
         map.push(row);
     }
     addFlatDirtlayer(map);
-    //lookForTilePatterns(map);
+    
 }
 
 function addFlatDirtlayer(map){
-    let startRow = Math.ceil(map.length / 2);
-    map.forEach((row, rowIndex) => {
+    map.forEach((row) => {
         for(let i = 0; i < row.length; i++){
-            if(rowIndex == startRow){
-                row[i] = 5;
-            }
-            if(rowIndex > startRow){
-                row[i] = 9;
-            }
+            row[i] = 9;
         }
     });
 }
 
-/*function lookForTilePatterns(map){
-    map.forEach((row, rowIndex) => {
-        let tileCount = 0;
-        row.forEach((column, columnIndex) => {
-            if(column == 5){
-                tileCount++
-            }else{
-                tileCount = 0;
-            }
-            if(tileCount > 15){
-                addCave(map, rowIndex, columnIndex);
-                tileCount = 0;
-            }
+function renderMap(){
+    map.forEach((mapRow, rowIndex) => {
+        mapRow.forEach((tile, index) => {
+            createTile(tile, index, rowIndex);
         });
     });
-}*/
+}
+
+function renderLeftChunk(){
+    let chunk = [];
+    let rowLenght = Math.ceil(initialPlayArea.width / initialPlayArea.gridSize);
+    let columnLenght = Math.ceil(initialPlayArea.height / initialPlayArea.gridSize);
+    for(let i = 0; i < columnLenght; i++){
+        let row = new Array(rowLenght).fill(0);
+        chunk.push(row);
+    }
+    addFlatDirtlayer(chunk)
+    chunk.forEach((row, index) => {
+        row.reverse();
+        row.forEach((rowItem) => {
+            map[index].unshift(rowItem)
+        })
+        console.log(map[index])
+    });
+}
 
 function addItems(){
 
 
 }
-
-/*function addCave(map, rowIndex, columnIndex){
-    let caveWidth = 4;
-    let rowsRemaining = map.length - rowIndex;
-    console.log(rowsRemaining)
-    map[rowIndex][columnIndex - 1] = 2;
-    for(let i = 0; i < caveWidth; i++){
-        map[rowIndex][columnIndex + i] = 0;
-        if(i == caveWidth - 1){
-            map[rowIndex][columnIndex + caveWidth] = 1;
-        }
-    }
-    for(let x = 0; x < rowsRemaining; x++){
-        if((rowsRemaining + x) < map.length){
-            map[rowsRemaining + 2 + x][columnIndex - 1] = 8;
-            for(let i = 0; i < caveWidth; i++){
-                map[rowsRemaining + 2 + x][columnIndex + i] = 0;
-                if(i == caveWidth - 1){
-                    map[rowIndex][columnIndex + caveWidth] = 1;
-                }
-            }
-        }
-    }
-}*/
-
-
-
-
-
 initializeBlankMap();
 
 

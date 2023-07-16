@@ -132,11 +132,8 @@ body{
 #player{
 	height: 100px;
 	width: 50px;
-	background-color: chocolate;
-	border-radius: 100px;
+	background-color: rgb(127, 65, 156);
 	position: absolute;
-	top: 200px;
-	left: 500px;
 }
 .monster.small{
 	width: 32px;
